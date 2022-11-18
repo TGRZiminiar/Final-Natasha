@@ -13,7 +13,8 @@ typedef struct {
 } User;
 
 void Register();
-
+void Login();
+void PrintUserData();
 User makeUser(char *userName, char *email, char *password, char *phone, char *role);
 
 #endif /* POINTOPERATIONS_H_ */

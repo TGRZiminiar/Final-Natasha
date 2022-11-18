@@ -11,7 +11,8 @@
 //   int product_minimum;
 // } ;
 
-
+// 1 = admin
+// 2 = user
 
 
 int main(){
@@ -20,40 +21,46 @@ int main(){
   User user;
   FILE *fp;
   int exist;
-  
-  system("clear");
-  printf("\t============WELCOME TO SLEEP SHOP============");
-  printf("\n\nPlease select your prefered operation");
-  printf("\n\n1.Login");
-  printf("\n2.Register");
-  printf("\n\nYour choice:\t");
-  scanf("%d",&choice);
 
-  fgetc(stdin);
-  switch (choice){
-  case 1:
-    printf("HELLO\n");
-    break;
-  case 2:
-    Register();
-    break;
+  char keepGoingOrNot = 'y';
+  while(keepGoingOrNot == 'y'){
 
-  case 3:
     system("clear");
-    fp = fopen("User.dat","r");
-    printf("\n ****User Information****\n");
-    while (fread(&user, sizeof(User), 1, fp)){
-      printf("USER NAME => %s\n",user.userName);
-      printf("Passwod => %s\n",user.password);
-      printf("EMail => %s\n",user.email);
-      printf("Phone => %s\n",user.phone);
-      printf("Role => %s\n",user.role);
-    }
-    fclose(fp);    
-    break;
-  default:
-    break;
-  }
+    printf("\t============WELCOME TO SLEEP SHOP============");
+    printf("\n\nPlease select your prefered operation");
+    printf("\n(1) Login");
+    printf("\n(2) Register");
+    printf("\n(3) PrintDb User");
+    printf("\n(4) Exist");
+    printf("\n\nYour choice\t:\t");
+    scanf("%d",&choice);
+    fgetc(stdin);
 
+    switch (choice){
+      case 1:
+        printf("HELLO\n");
+        Login();
+        break;
+      
+      case 2:
+        Register();
+        break;
+
+      case 3:
+        PrintUserData();
+        break;
+      
+      case 4:
+        printf("\n\t\t Bye Bye :)\n\n");
+        exit(0);
+        break;
+      
+      default:
+        printf("Your input is invalid, please try again");
+        break;
+    }
+    printf("\nDo you want to perform another operation?[y/n]:\t");
+    scanf("%s",&keepGoingOrNot);
+  }
   return 0;
 }
