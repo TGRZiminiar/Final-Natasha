@@ -110,7 +110,7 @@ int main(){
         scanf("%s",&saveBill);
 
         if(saveBill == 'y'){
-            fp = fopen("RestaurantBill.dat","a+");
+            fp = fopen("RestaurantBill.txt","a+");
             fwrite(&ord,sizeof(struct orders),1,fp);
             if(fwrite != 0)
             printf("\nSuccessfully saved");
@@ -122,7 +122,7 @@ int main(){
 
         case 2:
         system("clear");
-        fp = fopen("RestaurantBill.dat","r");
+        fp = fopen("RestaurantBill.txt","r");
         printf("\n  *****Your Previous Invoices*****\n");
         while(fread(&order,sizeof(struct orders),1,fp)){
             float tot = 0;
@@ -142,7 +142,7 @@ int main(){
         fgets(name,50,stdin);
         name[strlen(name)-1] = 0;
         system("clear");
-        fp = fopen("RestaurantBill.dat","r");
+        fp = fopen("RestaurantBill.txt","r");
         printf("\t*****Invoice of %s*****",name);
         while(fread(&order,sizeof(struct orders),1,fp)){
             float tot = 0;
