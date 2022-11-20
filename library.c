@@ -281,7 +281,7 @@ void DeleteUserInDb(){
     while (fread(&user, sizeof(User), 1 ,fp1)){
       fwrite(&user, sizeof(User), 1, fp);
     }
-
+    
     fclose(fp);
     fclose(fp1);
     

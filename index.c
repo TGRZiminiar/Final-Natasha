@@ -75,14 +75,16 @@ int main(){
       printf("\t============Admin Section============");
       printf("\n\nPlease select your prefered operation");
       printf("\n(1) Add Product To Stock");
-      printf("\n(2) Check Stock");
-      printf("\n(3) Check Income");
-      printf("\n(4) Check Payment");
-      printf("\n(5) Print All User");
-      printf("\n(6) Get Number Of User In DB");
-      printf("\n(7) Update User In DB");
-      printf("\n(8) Delete User In DB");
-      printf("\n(9) Logout");
+      printf("\n(2) Edit Product");
+      printf("\n(3) Remove Product");
+      printf("\n(4) Check Stock");
+      printf("\n(5) Check Income");
+      printf("\n(6) Check Payment");
+      printf("\n(7) Print All User");
+      printf("\n(8) Get Number Of User In DB");
+      printf("\n(9) Update User In DB");
+      printf("\n(10) Delete User In DB");
+      printf("\n(11) Logout");
       printf("\n\nYour choice\t:\t");
       scanf("%d",&choiceForAdmin);
       fgetc(stdin);
@@ -91,36 +93,44 @@ int main(){
         case 1:
           AddProduct();
           break;
-
+        
         case 2:
-
+          EditProductInDB();
           break;
-
+        
         case 3:
-
+          RemoveProduct();
           break;
 
         case 4:
-
+          PrintProduct();
           break;
 
         case 5:
-          PrintUserData();
+
           break;
 
         case 6:
-          printf("\n\tNumber Of User In Db\t:\t%d\n",GetNumberOfUser());
+
           break;
 
         case 7:
-          UpdateUserInDb();
+          PrintUserData();
           break;
 
         case 8:
-          DeleteUserInDb();
+          printf("\n\tNumber Of User In Db\t:\t%d\n",GetNumberOfUser());
           break;
 
         case 9:
+          UpdateUserInDb();
+          break;
+
+        case 10:
+          DeleteUserInDb();
+          break;
+
+        case 11:
 
           break;
 

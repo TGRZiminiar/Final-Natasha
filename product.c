@@ -71,3 +71,110 @@ void PrintProduct(){
     }
     fclose(fp);    
 }
+
+void EditProductInDB(){
+    Product product;
+    Product updateProduct;
+    FILE *fp, *fp1;
+
+    char targetProduct[50];
+    PrintProduct();
+    printf("Enter Product Name That You Want To Edit\t:\t");
+    fgets(targetProduct, 50, stdin);
+    targetProduct[strlen(targetProduct)-1] = 0;
+
+    fp = fopen("Product.dat","a+");
+    fp1 = fopen("tempProduct.dat","w");
+
+    char temp[50];
+    int found = 0;
+    
+    while (fread(&product, sizeof(Product), 1, fp)){
+        printf("THIS IS PRODUCT NAME %s\n",product.productName);
+        if(strcmp(targetProduct, product.productName) == 0){
+            
+            found = 1;
+
+            printf("\nEnter Product Name:\t");
+            fgets(temp, 50,stdin);
+            temp[strlen(temp)-1] = 0;
+            strcpy(updateProduct.productName, temp);
+
+            printf("\nEnter Product Price:\t");
+            scanf("%d",&updateProduct.productPrice);
+
+            printf("\nEnter Product Quantity:\t");
+            scanf("%d",&updateProduct.productQuantity);
+
+            printf("\nEnter Product Minimum Quantity:\t");
+            scanf("%d",&updateProduct.minimumQuantity);
+
+        }
+        fwrite(&updateProduct, sizeof(Product), 1, fp1);
+    }
+
+    fclose(fp);
+    fclose(fp1);
+    if(found == 1){
+        fp1 = fopen("tempProduct.dat","r");
+        fp = fopen("Product.dat","w");
+
+        while (fread(&updateProduct, sizeof(Product), 1, fp1)){
+            fwrite(&updateProduct, sizeof(Product), 1, fp);
+        }
+        
+        fclose(fp);
+        fclose(fp1);
+        printf("Update Product Success\n");
+
+    }
+    else {
+        printf("Data Not Found\n");
+    }
+
+}
+
+
+void RemoveProduct(){
+
+    Product product;
+    FILE *fp, *fp1;
+
+    char targetProduct[50];
+
+    fp = fopen("Product.dat","a+");
+    fp1 = fopen("tempProduct.dat","w");
+
+    PrintProduct();
+    printf("Enter Product Name That You Want To Delete\t:\t");
+    fgets(targetProduct, 50, stdin);
+    targetProduct[strlen(targetProduct) - 1] = 0;
+    int found = 0;
+
+    while (fread(&product, sizeof(Product), 1, fp)){
+        if(strcmp(targetProduct, product.productName) == 0){
+            found = 1;
+        }
+        else {
+            fwrite(&product, sizeof(Product), 1, fp1);
+        }
+    }
+
+    fclose(fp);
+    fclose(fp1);
+     
+    if(found == 1){
+        fp1 = fopen("tempProduct.dat","r");
+        fp = fopen("Product.dat","w");
+        while (fread(&product, sizeof(Product), 1, fp1)){
+            fwrite(&product, sizeof(Product),1 ,fp);
+        }
+        printf("Remove Product Success\n");
+        fclose(fp1);
+        fclose(fp);
+    }
+    else {
+        printf("Item Not Found\n");
+    }
+
+}

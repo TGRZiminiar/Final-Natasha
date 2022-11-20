@@ -19,6 +19,6 @@ typedef struct {
 
 void AddProduct();
 void PrintProduct();
-
-
+void EditProductInDB();
+void RemoveProduct();
 
