@@ -31,7 +31,9 @@ int main(){
     printf("\n(1) Login");
     printf("\n(2) Register");
     printf("\n(3) PrintDb User");
-    printf("\n(4) Exist");
+    printf("\n(4) Number Of User In DB");
+    printf("\n(5) Update User In DB");
+    printf("\n(6) Exist");
     printf("\n\nYour choice\t:\t");
     scanf("%d",&choice);
     fgetc(stdin);
@@ -51,6 +53,15 @@ int main(){
         break;
       
       case 4:
+        // int number = GetNumberOfUser();
+        printf("\n\tNumber Of User In Db\t:\t%d\n",GetNumberOfUser());
+        break;
+     
+      case 5:
+        UpdateUserInDb();
+        break;
+     
+      case 6:
         printf("\n\t\t Bye Bye :)\n\n");
         exit(0);
         break;

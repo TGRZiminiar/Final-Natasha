@@ -91,6 +91,7 @@ void Register(){
 
 void Login(){
     User user;
+    User updateUserData;
     FILE *fp;
     char userName[50];
     char password[50];
@@ -124,7 +125,7 @@ void PrintUserData(){
     User user;
     FILE *fp;
 
-    system("clear");
+    // system("clear");
     fp = fopen("User.dat","r");
     printf("\n ****User Information****\n");
     int i = 1;
@@ -141,3 +142,92 @@ void PrintUserData(){
     fclose(fp);    
 }
 
+int GetNumberOfUser(){
+    User user;
+    FILE *fp;
+
+    fp = fopen("User.dat","r");
+    fseek(fp, 0, SEEK_END);
+    int numberOfUser = ftell(fp) / sizeof(User);
+    fclose(fp);
+    return numberOfUser;
+}
+
+void UpdateUserInDb(){
+    User user;
+    User updateUser;
+    FILE *fp;
+    FILE *fp1;
+    int checkRole;
+    char targetUser[50] = "mix";
+
+    PrintUserData();
+    printf("Enter userName that you want to update\t:\t");
+    fgets(targetUser, 50, stdin);
+    targetUser[strlen(targetUser)-1] = 0;
+  
+    fp = fopen("User.dat","a+");
+    fp1 = fopen("temp.dat","w");
+    int found = 0;
+    while (fread(&user, sizeof(User), 1, fp)){
+        if(strcmp(targetUser,user.userName) == 0){
+            // fflush(stdin);
+            found = 1;
+            printf("\nPlease enter your userName:\t");
+            fgets(updateUser.userName,50,stdin);
+            updateUser.userName[strlen(updateUser.userName)-1] = 0;
+              
+
+            printf("\nPlease enter your password:\t");
+            fgets(updateUser.password,50,stdin);
+            updateUser.password[strlen(updateUser.password)-1] = 0;
+            
+            
+            printf("\nPlease enter your email:\t");
+            fgets(updateUser.email,50,stdin);
+            updateUser.email[strlen(updateUser.email)-1] = 0;
+
+            
+            printf("\nPlease enter your phone:\t");
+            fgets(updateUser.phone,50,stdin);
+            updateUser.phone[strlen(updateUser.phone)-1] = 0;
+
+            
+            printf("\nPlease enter your role:\t");
+            scanf("%d",&checkRole);
+
+            
+            if(checkRole == 1){
+              strcpy(updateUser.role,"admin");
+            }
+            else if (checkRole == 0){
+              strcpy(updateUser.role,"user");
+            }
+
+            user = updateUser;
+
+            printf("Update User Success\n");
+
+        }
+        fwrite(&updateUser, sizeof(User),1 ,fp1);
+    }
+    fclose(fp);
+    fclose(fp1);
+    if(found == 1){
+      fp1 = fopen("temp.dat","r");
+      fp = fopen("User.dat","w");
+
+      while (fread(&updateUser, sizeof(User), 1, fp1)){
+        fwrite(&updateUser, sizeof(User),1,fp);
+      }
+      
+
+      fclose(fp);
+      fclose(fp1);
+
+    }
+    else {
+      printf("\nData Not Found\n");
+    }
+
+} 

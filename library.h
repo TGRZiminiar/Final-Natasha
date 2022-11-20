@@ -15,6 +15,8 @@ typedef struct {
 void Register();
 void Login();
 void PrintUserData();
+int GetNumberOfUser();
+void UpdateUserInDb();
 User makeUser(char *userName, char *email, char *password, char *phone, char *role);
 
 #endif /* POINTOPERATIONS_H_ */
