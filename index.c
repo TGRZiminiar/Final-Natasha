@@ -1,7 +1,8 @@
 
 #include <stdio.h>
-#include<string.h>
+#include <string.h>
 #include "library.h"
+#include "product.h"
 #include <stdlib.h>
 
 // typedef struct Product {
@@ -17,59 +18,119 @@
 
 int main(){
 
-  int choice;
   User user;
   FILE *fp;
   int exist;
-
+  int loginOrNot = 0;
+  // 0 = NotLogin 1 = UserLogin 2 = AdminLogin
   char keepGoingOrNot = 'y';
   while(keepGoingOrNot == 'y'){
+    printf("THIS IS LOGINORNOT %d\n",loginOrNot);
+    if(loginOrNot == 0){
+      int choice;
+      system("cls");
+      printf("\t============WELCOME TO SLEEP SHOP============");
+      printf("\n\nPlease select your prefered operation");
+      printf("\n(1) Login");
+      printf("\n(2) Register");
+      printf("\n(3) Exist");
+      printf("\n(4) PrintDb User");
+      printf("\n\nYour choice\t:\t");
+      scanf("%d",&choice);
+      fgetc(stdin);
 
-    system("clear");
-    printf("\t============WELCOME TO SLEEP SHOP============");
-    printf("\n\nPlease select your prefered operation");
-    printf("\n(1) Login");
-    printf("\n(2) Register");
-    printf("\n(3) PrintDb User");
-    printf("\n(4) Number Of User In DB");
-    printf("\n(5) Update User In DB");
-    printf("\n(6) Exist");
-    printf("\n\nYour choice\t:\t");
-    scanf("%d",&choice);
-    fgetc(stdin);
+      switch (choice){
+        case 1:
+          loginOrNot = Login();
+          break;
+        
+        case 2:
+          loginOrNot = Register();
+          break;
 
-    switch (choice){
-      case 1:
-        printf("HELLO\n");
-        Login();
-        break;
-      
-      case 2:
-        Register();
-        break;
+        case 3:
+          PrintUserData();
+          break;
+        
+        case 4:
+          printf("\n\t\t Bye Bye :)\n\n");
+          exit(0);
+          break;
 
-      case 3:
-        PrintUserData();
-        break;
-      
-      case 4:
-        // int number = GetNumberOfUser();
-        printf("\n\tNumber Of User In Db\t:\t%d\n",GetNumberOfUser());
-        break;
-     
-      case 5:
-        UpdateUserInDb();
-        break;
-     
-      case 6:
-        printf("\n\t\t Bye Bye :)\n\n");
-        exit(0);
-        break;
-      
-      default:
-        printf("Your input is invalid, please try again");
-        break;
+        default:
+          printf("Your input is invalid, please try again");
+          break;
+      }
     }
+
+    //User Section
+    else if(loginOrNot == 1){
+      printf("User Login Sucess");
+    }
+
+    //Admin Section
+    else if(loginOrNot == 2){
+      int choiceForAdmin;
+      system("clear");
+      printf("\t============Admin Section============");
+      printf("\n\nPlease select your prefered operation");
+      printf("\n(1) Add Product To Stock");
+      printf("\n(2) Check Stock");
+      printf("\n(3) Check Income");
+      printf("\n(4) Check Payment");
+      printf("\n(5) Print All User");
+      printf("\n(6) Get Number Of User In DB");
+      printf("\n(7) Update User In DB");
+      printf("\n(8) Delete User In DB");
+      printf("\n(9) Logout");
+      printf("\n\nYour choice\t:\t");
+      scanf("%d",&choiceForAdmin);
+      fgetc(stdin);
+
+      switch (choiceForAdmin){
+        case 1:
+          AddProduct();
+          break;
+
+        case 2:
+
+          break;
+
+        case 3:
+
+          break;
+
+        case 4:
+
+          break;
+
+        case 5:
+          PrintUserData();
+          break;
+
+        case 6:
+          printf("\n\tNumber Of User In Db\t:\t%d\n",GetNumberOfUser());
+          break;
+
+        case 7:
+          UpdateUserInDb();
+          break;
+
+        case 8:
+          DeleteUserInDb();
+          break;
+
+        case 9:
+
+          break;
+
+        default:
+          printf("Your input is invalid, please try again");
+          break;
+      }
+      
+    }
+
     printf("\nDo you want to perform another operation?[y/n]:\t");
     scanf("%s",&keepGoingOrNot);
   }

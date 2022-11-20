@@ -1,5 +1,6 @@
 int add(int x, int y);
 int sub(int x, int y);
+#include <time.h>
 
 #ifndef POINTOPERATIONS_H_
 #define POINTOPERATIONS_H_
@@ -12,11 +13,13 @@ typedef struct {
   char role[10];
 } User;
 
-void Register();
-void Login();
+
+int Register();
+int Login();
 void PrintUserData();
 int GetNumberOfUser();
 void UpdateUserInDb();
+void DeleteUserInDb();
 User makeUser(char *userName, char *email, char *password, char *phone, char *role);
 
 #endif /* POINTOPERATIONS_H_ */

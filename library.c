@@ -16,22 +16,22 @@ User makeUser(char *userName, char *email, char *password, char *phone, char *ro
 }
 
 
-struct User {
-  char userName[50];
-  char email[50];
-  char password[50];
-  char phone[50];
-  char role[10];
-};
+// struct User {
+//   char userName[50];
+//   char email[50];
+//   char password[50];
+//   char phone[50];
+//   char role[10];
+// };
 
 
 
-void Register(){
+int Register(){
     User user;
     int checkRole;
     FILE *fp;
 
-    system("clear");
+    system("cls");
     printf("\n============Reigster Page============");
     
 
@@ -62,7 +62,7 @@ void Register(){
     if(checkRole == 1){
       strcpy(user.role,"admin");
     }
-    else if (checkRole == 0){
+    else{
       strcpy(user.role,"user");
     }
 
@@ -80,16 +80,25 @@ void Register(){
 
     if(saveBill == 'y'){
       fp = fopen("User.dat","a+");
-      fwrite(&user, sizeof(struct User),1 ,fp);
-      if(fwrite != 0)
-      printf("\nSuccessfully saved");
-      else 
-      printf("\nError saving");
+      fwrite(&user, sizeof(User),1 ,fp);
+      if(fwrite != 0){
+        printf("\nSuccessfully saved");
+      }
+      else{
+        printf("\nError saving");
+      } 
       fclose(fp);
+      if(checkRole == 1){
+        return 2;
+      }
+      else {
+        return 1;
+      }
     }
+    else return 0;
 }
 
-void Login(){
+int Login(){
     User user;
     User updateUserData;
     FILE *fp;
@@ -107,18 +116,25 @@ void Login(){
 
     // printf("THIS IS userName %s\n",userName);
     // printf("THIS IS PASSWORD %s\n",password);
-
+    int loginSucces = 0;
     fp = fopen("User.dat","r");
     while (fread(&user, sizeof(User), 1, fp)){
       if(strcmp(userName, user.userName) == 0 && strcmp(password, user.password) == 0){
         printf("\nLogin Success\n");
+
+        if(strcmp(user.role, "admin") == 0){
+          loginSucces = 2;
+        }
+        else if(strcmp(user.role, "user") == 0){
+          loginSucces = 2;
+        }
         break;
       } else continue;
       // printf("\tUserName  :\t%s\n",user.userName);
       // printf("\tPassword  :\t%s\n",user.password);
     }
 
-
+    return loginSucces;
 }
 
 void PrintUserData(){
@@ -231,3 +247,44 @@ void UpdateUserInDb(){
     }
 
 } 
+
+void DeleteUserInDb(){
+  User user;
+  FILE *fp, *fp1;
+
+  char targetUser[50];
+
+  fp = fopen("User.dat","a+");
+  fp1 = fopen("temp.dat","w");
+
+  PrintUserData();
+  printf("Enter userName that you want to delete\t:\t");
+  fgets(targetUser, 50, stdin);
+  targetUser[strlen(targetUser)-1] = 0;
+  int found = 0;
+
+  while (fread(&user, sizeof(User), 1, fp)){
+    if(strcmp(targetUser,user.userName) == 0){
+      found = 1;
+    }
+    else {
+      fwrite(&user, sizeof(User), 1, fp1);
+    }
+  }
+  
+  fclose(fp);
+  fclose(fp1);
+
+  if(found == 1){
+    fp1 = fopen("temp.dat","r");
+    fp = fopen("User.dat","w");
+    while (fread(&user, sizeof(User), 1 ,fp1)){
+      fwrite(&user, sizeof(User), 1, fp);
+    }
+
+    fclose(fp);
+    fclose(fp1);
+    
+  }
+
+}
